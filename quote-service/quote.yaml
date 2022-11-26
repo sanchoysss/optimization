@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quote-deployment
+  labels:
+    app: quote-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: quote-pod
+  template:
+    metadata:
+      labels:
+        pod: quote-pod
+    spec:
+      containers:
+        - name: quote-service
+          image: sanchoys/optimization-quote
+          ports:
+            - containerPort: 8080
+          env:
+            - name: spring.datasource.password
+              valueFrom:
+                secretKeyRef:
+                  name: quote-secret
+                  key: passw
+            - name: spring.datasource.username
+              valueFrom:
+                secretKeyRef:
+                  name: quote-secret
+                  key: usr
+            - name: spring.datasource.url
+              value: jdbc:postgresql://quote-db-service:5432/optimization-db
+            - name: spring.datasource.driver-class-name
+              value: org.postgresql.Driver
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quote-service
+spec:
+  selector:
+    app: quote-deployment
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+      nodePort: 30000
