@@ -1,17 +1,17 @@
 package by.alex.quote.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -25,7 +25,8 @@ import java.util.UUID;
 public class QuoteItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
@@ -46,7 +47,8 @@ public class QuoteItem {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof QuoteItem quoteItem)) return false;
+        if (!(o instanceof QuoteItem)) return false;
+        QuoteItem quoteItem = (QuoteItem) o;
         return id.equals(quoteItem.id) && quoteItemPrice.equals(quoteItem.quoteItemPrice) && productOffering.equals(quoteItem.productOffering);
     }
 

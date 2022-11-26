@@ -1,17 +1,17 @@
 package by.alex.quote.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -26,7 +26,8 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
     @Column(nullable = false)
@@ -63,7 +64,8 @@ public class Customer {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Customer customer)) return false;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
         return id.equals(customer.id) && firstName.equals(customer.firstName) && lastName.equals(customer.lastName) && identificationNumber.equals(customer.identificationNumber) && gender.equals(customer.gender) && Objects.equals(birthDate, customer.birthDate) && address.equals(customer.address);
     }
 

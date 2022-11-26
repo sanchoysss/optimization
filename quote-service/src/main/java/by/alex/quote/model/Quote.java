@@ -1,20 +1,20 @@
 package by.alex.quote.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -30,7 +30,8 @@ import java.util.UUID;
 public class Quote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private UUID id;
 
     @Column(nullable = false)
@@ -66,7 +67,8 @@ public class Quote {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Quote quote)) return false;
+        if (!(o instanceof Quote)) return false;
+        Quote quote = (Quote) o;
         return id.equals(quote.id) && state.equals(quote.state) && quoteDate.equals(quote.quoteDate) && customer.equals(quote.customer) && totalPrice.equals(quote.totalPrice) && quoteItems.equals(quote.quoteItems);
     }
 
