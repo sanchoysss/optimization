@@ -34,6 +34,12 @@ spec:
               value: jdbc:postgresql://quote-db-service:5432/optimization-db
             - name: spring.datasource.driver-class-name
               value: org.postgresql.Driver
+            - name: spring.jpa.hibernate.ddl-auto
+              value: update
+            - name: spring.jpa.show-sql
+              value: "true"
+            - name: spring.jpa.properties.hibernate.format_sql
+              value: "true"
 ---
 apiVersion: v1
 kind: Service
