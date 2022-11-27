@@ -2,6 +2,7 @@ package by.alex.bpo.feign;
 
 import by.alex.bpo.dto.createquote.Quote;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -9,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface QuoteClient {
 
     @PostMapping
-    Quote createQuote(@RequestBody Quote quote);
+    ResponseEntity<Quote> createQuote(@RequestBody Quote quote);
 }
