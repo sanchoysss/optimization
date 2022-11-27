@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bpo-deployment
+  labels:
+    app: bpo-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pod: bpo-pod
+  template:
+    metadata:
+      labels:
+        pod: bpo-pod
+    spec:
+      containers:
+        - name: bpo-service
+          image: sanchoys/optimization-bpo
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quote-service
+spec:
+  selector:
+    app: quote-deployment
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8008
+      targetPort: 8080
+      nodePort: 30001
