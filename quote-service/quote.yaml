@@ -51,6 +51,6 @@ spec:
   type: LoadBalancer
   ports:
     - protocol: TCP
-      port: 5432
-      targetPort: 5432
+      port: 8080
+      targetPort: 8080
       nodePort: 30000
