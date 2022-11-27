@@ -8,5 +8,6 @@
 
     <modules>
         <module>quote-service</module>
+        <module>bpo-service</module>
     </modules>
 </project>
